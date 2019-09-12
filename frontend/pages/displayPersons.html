@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/allStyles.css">
+    <link rel="stylesheet" href="../assets/displayPersons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Afiseaza persoane</title>
+</head>
+<body>
+    <header>
+        <div id="greyTopRibbon"></div>
+        <div id="appBrand">Mvp WebApp</div>
+        <nav id="menuTreeContainer"></nav>
+    </header>
+    
+    <section>
+        <table id="personsContainer">
+            <caption> Lista persoane</caption>
+            <tbody id="personsContainerBody">
+                <tr class="table_head"> 
+                    <th>Nr crt</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>CNP</th>
+                    <th>Tip Document Identitate</th>
+                    <th>Serie</th>
+                    <th>Numar</th>
+                    <th>Eliberat de</th>
+                    <th>Data eliberarii</th>
+                    <th>Localitatea</th>
+                    <th>Strada</th>
+                    <th>Nr strada</th>
+                    <th>Bloc</th>
+                    <th>Scara</th>
+                    <th>Nr ap</th>
+                    <th>Judet</th>
+                    <th>Sector</th>
+                    <th>Nr telefon</th>
+                    <th>Actions</th>
+                </tr>    
+            </tbody>
+        </table>     
+    </section>
+        
+    <script src="../models/PersonsList.js"></script> 
+    <script src="../models/Persoana.js"></script>    
+    <script src="../views/infoMessage.js"></script>
+    <script src="../views/displayPersons.js"></script>
+
+</body>
+</html>

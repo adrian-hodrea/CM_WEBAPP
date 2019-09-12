@@ -1,0 +1,54 @@
+
+/* favorites zone styles */
+
+#favoriteButtonsContainer {
+    width: 212px;
+    height: 100px;    
+    position: relative;
+    top: 100px;;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    font-size: 0;  
+}
+
+.buttonsLvl1 {
+    box-sizing: border-box; 
+    width: 100px;
+    height: 100px;
+    background-color: var(--to-gradient-body-color);
+    margin-left: 4px;
+    display: inline-block;
+    border: 2px solid  var(--to-gradient-body-color);
+    /*transition: all ease-in-out 500ms; */
+}
+
+.buttonsLvl1:hover {
+   background-color: #3481ab;
+   cursor: pointer;
+}
+
+div  i {
+    display: inline-block;
+    font-size: 32px;
+    width: 100%;
+    color: var(--icon-color);
+    margin: 20px 0 auto;
+    text-align: center;
+}
+
+div p {
+    text-align: center;
+    margin: 8px 0px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #afdaf3;
+}
+
+.buttonsLvl2 {
+    box-sizing: border-box; 
+    width: 200px;
+    height: 100px;
+    background-color: #2b607e;
+    margin-left: 4px;
+    border: 2px solid  #2b607e;
+}

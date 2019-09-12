@@ -1,0 +1,64 @@
+:root {
+    --tr-hover-color: var(--third-color);
+}
+
+* {
+    font-size: 12px;
+    color: var(--font-color-black);
+    }
+        
+    table {
+        font-size: 14px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 90%;
+        margin: 40px auto;
+    }
+    
+    caption {
+        margin: 10px;
+        font-size: 24px;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;   
+        padding: 3px;
+    }
+    
+    td i {
+        display: block;
+        border-radius: 3px;
+        margin: 0;
+        color: white;
+    }
+
+    .editPerson {
+        padding: 5px 7px;
+        background-color: #ec971f;
+    }
+
+    .deletePerson {
+        padding: 5px 8px;
+        background-color: #d9534f;
+    }
+
+    td i:hover {
+        background-color: var(--main-color);
+        cursor: pointer;
+    }
+
+    tr:hover:not(:first-child) {
+       background-color: var(--tr-hover-color);
+    }
+
+    tr:hover td {
+        color: white;
+    }
+    
+    tr {
+        background-color: azure;
+    }
+    .table_head{
+        background-color: #DCDCDC;
+        font-weight: bold;
+    }
