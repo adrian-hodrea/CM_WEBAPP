@@ -25,10 +25,17 @@ class Persoana {
         const self = this;
         return fetch(apiUrl, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },   
+            headers: {"Content-Type": "application/json"},   
             body: JSON.stringify(self)
          })
+    }
+
+    stergePersoanaDinBD (apiUrl) {
+        const self = this;
+        return fetch (apiUrl, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify(self)  
+        })
     }
 }

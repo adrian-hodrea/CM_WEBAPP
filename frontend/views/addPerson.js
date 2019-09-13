@@ -17,8 +17,7 @@ function onHtmlLoaded() {
         requiredFields.forEach( (item)=> {
             if (item.value === "") {
                 allRequiredFieldsOK = false;
-                item.style.border = "1px solid lightcoral";
-                item.style.backgroundColor = "rgba(240,128,128 , 0.4 )";              
+                item.classList.add("mandatoryField");
             }
             else {
                 item.style.border = "none";
@@ -54,8 +53,7 @@ function onHtmlLoaded() {
         persoanaNoua.adaugaPersoanaInBD(apiUrl)
             .then(response => {
                 if (response.ok) {
-                    response.json()
-                    .then(bodyData => promptInfoMessage(bodyData.message));
+                    response.json().then(bodyData => promptInfoMessage(bodyData.message));
                 }    
                 else {
                     response.json()

@@ -18,7 +18,7 @@ const promptInfoMessage = messageToDisplay => {
         .addEventListener("click", () => document.getElementById("OpenModal").remove());
 };
 
-const promptConfirmationMessage = (messageToDisplay, handleConfirmation) => {
+const promptConfirmationMessage = (messageToDisplay, handleConfirmation, handleCancelation) => {
     const modalContainer = document.createElement("div");
     modalContainer.id = "OpenModal";
     modalContainer.classList.add("modalDialog");
@@ -35,7 +35,10 @@ const promptConfirmationMessage = (messageToDisplay, handleConfirmation) => {
     document.body.appendChild(modalContainer);
 
     document.getElementById("RejectionBtn")
-        .addEventListener("click", () => document.getElementById("OpenModal").remove());
+        .addEventListener("click", () => {
+            document.getElementById("OpenModal").remove();
+            handleCancelation();
+        });
     document.getElementById("ConfirmationBtn")
     .addEventListener("click", () => handleConfirmation());
 

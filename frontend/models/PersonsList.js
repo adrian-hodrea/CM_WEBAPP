@@ -8,7 +8,7 @@ class PersonsList {
         return fetch(apiUrl, {
             method: "GET"
         })
-        .then(response => response.json())
+        .then(responseObject => responseObject.json())
         .then(bodyData => {
             bodyData.forEach(element => {
                 self.items.push(element);    

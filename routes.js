@@ -21,8 +21,8 @@ router.get("/", (req,res) => {
 
 /* Routes dealing with DB */
 
-router.get('/getMenuTree', (req,res) => {
-    const mysqlConnectionPool = mysql.createPool({
+const createConnectionPool = () => {
+    return mysql.createPool({
         connectionLimit : 100,
         host : 'localhost',
         user : 'mvp',
@@ -30,15 +30,14 @@ router.get('/getMenuTree', (req,res) => {
         database : 'mvp',
         debug : false
     })
+}
+
+router.get('/getMenuTree', (req,res) => {
+    const mysqlConnectionPool = createConnectionPool();
     const menuQuery = 
 
     `SELECT menu.execrun AS "id", exec.title AS "name", menu.exec AS "parent_id"
     FROM menu INNER JOIN exec ON menu.execrun = exec.exec`;
-    /*
-    `SELECT E1.title as "Meniu Parinte",  E2.title as "Meniu Copil"
-    FROM menu 
-    INNER JOIN exec E2 ON menu.execrun = E2.exec 
-    INNER JOIN exec E1 ON menu.exec = E1.exec`; */
     mysqlConnectionPool.query(menuQuery, (err, rows, fields) => {
         if (!err) {
             rows.forEach((element, index, sir) => {
@@ -62,14 +61,7 @@ router.get('/getMenuTree', (req,res) => {
 })
 
 router.post("/postPersoanaNoua", (req, res) => {
-    const mysqlConnectionPool = mysql.createPool({
-        connectionLimit : 100,
-        host : 'localhost',
-        user : 'mvp',
-        password : 'mvppass',
-        database : 'mvp',
-        debug : false
-    })
+    const mysqlConnectionPool = createConnectionPool();
     const pers = req.body;
     const addPersonQuery = 
     `       INSERT INTO persoane 
@@ -100,15 +92,8 @@ router.post("/postPersoanaNoua", (req, res) => {
 
 /*   ---- get persons from db   */
 
-router.get('/getpersons',((req, res) => {
-    const mysqlConnectionPool = mysql.createPool({
-        connectionLimit : 100,
-        host : 'localhost',
-        user : 'mvp',
-        password : 'mvppass',
-        database : 'mvp',
-        debug : false
-    })
+router.get('/getPersons',((req, res) => {
+    const mysqlConnectionPool = createConnectionPool();
     const getPersonsQuery = `SELECT * FROM persoane`;
     mysqlConnectionPool.query(getPersonsQuery, (err, rows, fields) => {
         if (!err) {
@@ -124,5 +109,31 @@ router.get('/getpersons',((req, res) => {
     })
     })
 );
+
+/*   ---- Delete persons from db   */
+
+router.post('/deletePerson',((req,res) => {
+    const mysqlConnectionPool = createConnectionPool();
+    const pers = req.body;
+    const deletePersonQuery = `DELETE FROM persoane WHERE cnp=${pers.cnp}`;
+    mysqlConnectionPool.query(deletePersonQuery, (err, rows, fields) => {
+        if (!err) {
+            res.setHeader('200', {'Content-Type' : 'application/json'}); 
+            res.send({
+                "message" : `Persoana ${pers.nume} ${pers.prenume} a fost stearsa din Baza de Date`
+            });
+        }
+        else {
+            console.log('Eroare la stergerea din baza de date. \n Error: ' + JSON.stringify(err));
+            res.setHeader('500', {'Content-Type' : 'application/json'}); 
+            res.send({
+                "message" : `Persoana ${pers.nume} ${pers.prenume} NU a fost stearsa din baza de date`
+            })
+        }
+    })
+}));
+
+
+
 
 module.exports = router;
