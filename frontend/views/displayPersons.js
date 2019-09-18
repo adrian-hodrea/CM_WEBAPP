@@ -9,34 +9,53 @@ const appendPersons = (listOfPersons) => {
     listOfPersons.forEach( (element, index) => {
         var persoana = new Persoana(element);
         var tr = document.createElement("tr");
+        tr.setAttribute("data-editMode","false");
         tr.innerHTML = `
             <td>${index+1}</td>
-            <td>${persoana.nume}</td>
-            <td>${persoana.prenume}</td>
-            <td>${persoana.cnp}</td>
+            <td><p data-propName="nume"    class="editableTableCell">${persoana.nume}</p></td>
+            <td><p data-propName="prenume" class="editableTableCell">${persoana.prenume}</p></td>
+            <td><p data-propName="cnp" class="editableTableCell">${persoana.cnp}</p></td>
             <td>-</td>
-            <td>${persoana.seriaCI}</td>
-            <td>${persoana.numarCI}</td>
-            <td>${persoana.eliberatDeCI}</td>
-            <td>${persoana.dataEliberariiCI}</td>
-            <td>${persoana.localitatea}</td>
-            <td>${persoana.strada}</td>
-            <td>${persoana.nrStrada}</td>
-            <td>${persoana.bloc}</td>
-            <td>${persoana.scara}</td>
-            <td>${persoana.nrApartament}</td>
-            <td>${persoana.judet}</td>
-            <td>${persoana.sector}</td>
-            <td>${persoana.telefon}</td>
+            <td><p data-propName="seriaCI" class="editableTableCell">${persoana.seriaCI}</p></td>
+            <td><p data-propName="numarCI" class="editableTableCell">${persoana.numarCI}</p></td>
+            <td><p data-propName="eliberatDeCI" class="editableTableCell">${persoana.eliberatDeCI}</p></td>
+            <td><p data-propName="dataEliberariiCI" class="editableTableCell">${persoana.dataEliberariiCI}</p></td>
+            <td><p data-propName="localitatea" class="editableTableCell">${persoana.localitatea}</p></td>
+            <td><p data-propName="strada" class="editableTableCell">${persoana.strada}</p></td>
+            <td><p data-propName="nrStrada" class="editableTableCell">${persoana.nrStrada}</p></td>
+            <td><p data-propName="bloc" class="editableTableCell">${persoana.bloc}</p></td>
+            <td><p data-propName="scara" class="editableTableCell">${persoana.scara}</p></td>
+            <td><p data-propName="nrApartament" class="editableTableCell">${persoana.nrApartament}</p></td>
+            <td><p data-propName="judet" class="editableTableCell">${persoana.judet}</p></td>
+            <td><p data-propName="sector" class="editableTableCell">${persoana.sector}</p></td>
+            <td><p data-propName="telefon" class="editableTableCell">${persoana.telefon}</p></td>
             <td>
-                <i title="Editeaza" class="editPerson fas fa-pen"></i>
-                <i title="Sterge" class="deletePerson fas fa-trash-alt"></i>    
+                <span title="Editeaza" id="editPersonBtn">
+                    <i class="fas fa-pen"></i>
+                    <span>Edit</span>
+                </span>
+                <span title="Sterge" id="deletePersonBtn">
+                    <i class="fas fa-trash-alt"></i>  
+                    <span>Delete</span>
+                </span>
+                <span title="Save" id="saveChangesBtn">
+                    <span>Save</span>
+                </span>
             </td>             
             `; 
-        var editButton = tr.lastElementChild.firstElementChild;
-        editButton.addEventListener("click", handleEditPerson(persoana,tr,editButton));
-        tr.lastElementChild.lastElementChild.addEventListener("click", handleDeletePerson(persoana,tr));
-       
+        var editButton =   tr.querySelector("#editPersonBtn");
+        var deleteButton = tr.querySelector("#deletePersonBtn");
+        var saveButton =   tr.querySelector("#saveChangesBtn");
+        let actualHtmlData = {};
+        let newHtmlDataObj = {};
+
+        saveButton.style.visibility = "hidden";
+
+        editButton.addEventListener("click", handleEditPerson(tr,editButton,saveButton));
+        deleteButton.addEventListener("click", handleDeletePerson(persoana,tr));
+        saveButton.addEventListener("click", handleSavePerson(tr,saveButton,actualHtmlData));
+
+
         function handleDeletePerson(persoana,tr)  {
             return () => {
                 tr.classList.add("mandatoryField");
@@ -63,21 +82,80 @@ const appendPersons = (listOfPersons) => {
                     }
                 }
                 promptConfirmationMessage(message, handlePersonDeleteConfirmation(persoana,tr), handlePersonDeleteCancelation(tr)); 
-            }
+            } 
 
         }; // end of handleDeletePerson
 
-        function handleEditPerson(persoana,tr,editButton) {
+        function handleEditPerson(tr,editButton,saveButton) {
             return () => {
-                tr.setAttribute("contenteditable","true");
-                tr.classList.add("editableTableRow");
-                editButton.classList.add("sunkEffect");
+                const editMode = tr.getAttribute("data-editMode");
+                var editableCells = Array.from(tr.getElementsByClassName("editableTableCell"));
+                if (editMode === 'false') {
+                    saveActualHtmlData(editableCells,actualHtmlData);
+                    tr.setAttribute("data-editMode","true");
+                    editButton.lastElementChild.innerHTML="Cancel";
+                    editButton.firstElementChild.style.display = "none";
+                    editableCells.forEach(element => {
+                        element.setAttribute("contenteditable","true");
+                    });
+                    tr.classList.add("editableTableRow");
+                    saveButton.style.visibility = "visible";   
+                }
+                else {
+                    tr.setAttribute("data-editMode","false");
+                    restoreDataBeforeEdit(editableCells,actualHtmlData);
+                    editButton.lastElementChild.innerHTML="Edit";
+                    editButton.firstElementChild.style.display = "inline";
+                    editableCells.forEach(element => {
+                        element.removeAttribute("contenteditable");
+                    });
+                    tr.classList.remove("editableTableRow");
+                    saveButton.style.visibility = "hidden";   
+                }
             }
         } // end of handleEditPerson
 
+        function handleSavePerson(tr) {
+            return ()=> {
+                var editableCells = Array.from(tr.getElementsByClassName("editableTableCell"));
+                saveActualHtmlData(editableCells,newHtmlDataObj);
+                const person = new Persoana(newHtmlDataObj);
+                const apiUrl = root + '/editPerson';
+                person.modificaPersoanaInBD(apiUrl)
+                .then(response => response.json()
+                    .then(bodyData => {
+                        tr.setAttribute("data-editMode","false");
+                        editButton.lastElementChild.innerHTML="Edit";
+                        editButton.firstElementChild.style.display = "inline";    
+                        editableCells.forEach(element => {
+                            element.removeAttribute("contenteditable");
+                        });
+                        tr.classList.remove("editableTableRow");
+                        saveButton.style.visibility = "hidden";       
+                        /* setTimeout(() => {
+                            promptInfoMessage(bodyData.message);
+                        }, 300);    */                              
+                    })  
+                )
+            }
+        }
 
+        function saveActualHtmlData(editableCells,objToPopulate) {
+            editableCells.forEach(element => {
+                var propName = element.getAttribute("data-propName");
+                objToPopulate[propName] = element.innerText;
+            }); 
+        }
 
-        personsContainer.appendChild(tr);
+        function restoreDataBeforeEdit(editableCells,objToReadFrom) {
+            editableCells.forEach(element => {
+                var propName = element.getAttribute("data-propName");
+                var textToRestore = objToReadFrom[propName];
+                element.innerText = textToRestore;
+            });
+        };    
+
+        personsContainer.appendChild(tr);    
 
     }); // end of foreach
 }

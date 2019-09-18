@@ -1,3 +1,4 @@
+
 class Persoana {
     constructor (pers) {
         this.nume = pers.nume;
@@ -38,4 +39,15 @@ class Persoana {
             body: JSON.stringify(self)  
         })
     }
+
+    modificaPersoanaInBD (apiUrl) {
+        const self = this;
+        return fetch(apiUrl, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"}, 
+            body: JSON.stringify(self)  
+        })
+    }
+
 }
+

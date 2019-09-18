@@ -62,16 +62,18 @@ router.get('/getMenuTree', (req,res) => {
 
 router.post("/postPersoanaNoua", (req, res) => {
     const mysqlConnectionPool = createConnectionPool();
-    const pers = req.body;
+    var {cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+        localitatea, strada, nrStrada, bloc, scara, nrApartament, 
+        judet, sector, telefon} = req.body;
     const addPersonQuery = 
     `       INSERT INTO persoane 
     (cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
         localitatea, strada, nrStrada, bloc, scara, nrApartament, 
         judet, sector, telefon) 
             VALUES 
-    ('${pers.cnp}', '${pers.nume}', '${pers.prenume}', '${pers.seriaCI}', '${pers.numarCI}', '${pers.eliberatDeCI}', '${pers.dataEliberariiCI}',
-    '${pers.localitatea}', '${pers.strada}', '${pers.nrStrada}', '${pers.bloc}', '${pers.scara}', '${pers.nrApartament}', 
-    '${pers.judet}', '${pers.sector}', '${pers.telefon}')`;
+    ('${cnp}', '${nume}', '${prenume}', '${seriaCI}', '${numarCI}', '${eliberatDeCI}', '${dataEliberariiCI}',
+    '${localitatea}', '${strada}', '${nrStrada}', '${bloc}', '${scara}', '${nrApartament}', 
+    '${judet}', '${sector}', '${telefon}')`;
     
     mysqlConnectionPool.query(addPersonQuery, (err, rows, fields) => {
         if (!err) {
@@ -89,6 +91,34 @@ router.post("/postPersoanaNoua", (req, res) => {
     })
 })
 
+router.put("/editPerson", (req,res) => {
+    const mysqlConnectionPool = createConnectionPool();
+    var {cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+        localitatea, strada, nrStrada, bloc, scara, nrApartament, 
+        judet, sector, telefon} = req.body;
+        const editPersonQuery = 
+        ` UPDATE persoane SET  nume = ?, prenume = ?, seriaCI = ?, numarCI = ?, eliberatDeCI = ?, dataEliberariiCI = ?, 
+            localitatea = ?, strada = ?, nrStrada = ?, bloc = ?, scara = ?, nrApartament = ?, 
+            judet = ?, sector = ?, telefon = ? WHERE cnp = ?
+        `
+        mysqlConnectionPool.query(editPersonQuery, [nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+            localitatea, strada, nrStrada, bloc, scara, nrApartament, 
+            judet, sector, telefon, cnp], (err, rows, fields) => {
+                if (!err) {
+                    res.setHeader('200', {'Content-Type' : 'application/json'});  
+                    res.send({
+                        "message" : "Persoana a fost modificata cu succes in baza de date"
+                    });
+                }
+                else {
+                    console.log('DB connection failed. \n Error : ' + JSON.stringify(err));
+                    res.status(500);
+                    res.send(JSON.stringify(err));
+                    return;
+                }
+        
+            });
+}); 
 
 /*   ---- get persons from db   */
 

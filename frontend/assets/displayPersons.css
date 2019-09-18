@@ -2,7 +2,12 @@
     font-size: 12px;
     color: var(--font-color-black);
     }
-        
+       
+    p {
+        margin: 2px;
+        padding: 2px;
+    }
+
     table {
         font-size: 14px;
         font-family: arial, sans-serif;
@@ -17,30 +22,49 @@
     }
     td, th {
         border: 1px solid #dddddd;
-        text-align: center;   
+        text-align: left;   
         padding: 3px;
     }
     
-    td i {
-        display: block;
+    #editPersonBtn, #deletePersonBtn, #saveChangesBtn {
+        width: 68px;
+        display: inline-block;
+        padding: 5px 7px;
         border-radius: 3px;
-        margin: 0;
-        color: white;
+        margin: 0 2px 0 0;
+        text-align: center;
     }
 
-    .editPerson {
-        padding: 5px 7px;
+    #saveChangesBtn {
+        background-color: #5ec268
+    }
+
+    #saveChangesBtn:hover {
+        cursor: pointer;
+        background-color: #43ac6a
+    }
+
+
+    #editPersonBtn {
+        background-color: #f6af4d
+    }
+
+    #editPersonBtn:hover {
+        cursor: pointer;
         background-color: #ec971f;
     }
 
-    .deletePerson {
-        padding: 5px 8px;
+    #deletePersonBtn {
+        background-color: #f98978;
+    }
+
+    #deletePersonBtn:hover {
+        cursor: pointer;
         background-color: #d9534f;
     }
 
-    td i:hover {
-        background-color: var(--main-color);
-        cursor: pointer;
+    #editPersonBtn > span, #deletePersonBtn > span, #saveChangesBtn > span, i {
+        color: white;
     }
 
     tr:hover:not(:first-child) {
@@ -55,3 +79,4 @@
         background-color: #DCDCDC;
         font-weight: bold;
     }
+    

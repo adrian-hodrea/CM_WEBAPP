@@ -114,13 +114,22 @@ nav#menuTreeContainer>li {
 }
 
 .editableTableRow:hover:not(:first-child) {
-    background-color: var(--edit-row-color);  
+    background-color: var(--edit-row-color);
+} 
+
+tr.editableTableRow  p {
+    background: white;
+    outline: none;
+    /* border: 1px solid var(--main-color); */
 } 
 
 
- tr.editableTableRow > td:focus {
-    outline: 1px solid var(--main-color);
-    outline-offset: -3px;
+tr.editableTableRow  p:focus {
+    background: white;
+    outline: none;
+    border: 1px solid var(--main-color);
+    border-radius: 2px;
+    box-shadow: 0 0 6px var(--main-color); 
 } 
 
 .mandatoryField {
@@ -128,9 +137,3 @@ nav#menuTreeContainer>li {
     background-color: var(--required-field-color);
 }
 
-.sunkEffect {
-    border-top: 1px solid var(--font-color-black);
-    border-right: 1px solid var(--font-color-black);
-    border-bottom: 1px solid white;
-    border-left: 1px solid white;
-}
