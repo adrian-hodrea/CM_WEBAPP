@@ -28,7 +28,7 @@ div.inputPair {
   margin: 0 0 2px 0;
 }
 
-div.inputPair > input {
+div.inputPair > input, div.inputPair > select {
   position: absolute;
   right: 0;
   height: 100%;
@@ -52,7 +52,7 @@ label, i {
 }
 
 /* Full-width input fields */
-input[type=text], input[type=date] {
+input[type=text], input[type=date], select {
   width: 50%;
   padding: 4px;
  /* margin: 5px  12px 0; */

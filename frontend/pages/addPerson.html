@@ -39,27 +39,34 @@
                 <input type="text" name="cnp" required>
             </div>
 
+            <div class="inputPair">
+                <i class="fas fa-star"></i>  
+                <label for="codCI"><b>Tip Document de Identitate</b></label>
+                <select id="IdDocTypes" name="codCI" required> 
+                </select>
+            </div>
+
             <div class="inputPair"> 
                 <i class="fas fa-star"></i>
-                <label for="seriaCI"><b>Serie Carte de Identitate</b></label>
+                <label for="seriaCI"><b>Serie Document de Identitate</b></label>
                 <input type="text" name="seriaCI" required>
             </div>
         
             <div class="inputPair">
                 <i class="fas fa-star"></i>
-                <label for="numarCI"><b>Numar Carte de Identitate</b></label>
+                <label for="numarCI"><b>Numar Document de Identitate</b></label>
                 <input type="text" name="numarCI" required>
             </div>
 
             <div class="inputPair">
                 <i class="fas fa-star fantom"></i>      
-                <label for="eliberatDeCI"><b>Carte de Identitate eliberata de</b></label>
+                <label for="eliberatDeCI"><b>Document de Identitate eliberata de</b></label>
                 <input type="text" name="eliberatDeCI">
             </div>
 
             <div class="inputPair">        
                 <i class="fas fa-star fantom"></i>
-                <label for="dataEliberariiCI"><b>Data eliberarii cartii de identitate</b></label>
+                <label for="dataEliberariiCI"><b>Data eliberarii doc. de identitate</b></label>
                 <input type="date" name="dataEliberariiCI">
             </div>
 
@@ -123,7 +130,7 @@
 
     <script src="../models/Persoana.js"></script> 
     <script src="../views/infoMessage.js"></script>
-    <script src="../views/addPerson.js"></script>
+    <script type="module" src="../views/addPerson.js"></script>
 
 </body>
 </html>

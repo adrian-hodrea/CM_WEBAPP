@@ -5,6 +5,8 @@ class Persoana {
         this.prenume = pers.prenume;
         this.cnp = pers.cnp;
 
+        this.codCI = pers.codCI;
+        //this.desCI = pers.desCI;
         this.seriaCI = pers.seriaCI;
         this.numarCI = pers.numarCI;
         this.eliberatDeCI = pers.eliberatDeCI;

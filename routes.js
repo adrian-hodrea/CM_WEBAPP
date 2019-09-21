@@ -46,8 +46,6 @@ router.get('/getMenuTree', (req,res) => {
               }  
             });
             var treeMenuData = arrayToTree(rows);
-            console.log(rows);
-            console.log(treeMenuData);
             res.setHeader('200', {'Content-Type' : 'application/json'});  
             res.json(treeMenuData);
         }
@@ -60,18 +58,38 @@ router.get('/getMenuTree', (req,res) => {
     })      
 })
 
-router.post("/postPersoanaNoua", (req, res) => {
+router.get('/getIdDocTypes', (req, res) => {
     const mysqlConnectionPool = createConnectionPool();
-    var {cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+    const query = `SELECT * FROM citypes`;
+    mysqlConnectionPool.query(query, (err, rows, fields) => {
+        if (!err) {
+            var docTypesObj = arrayToTree(rows);
+            res.setHeader('200', {'Content-Type' : 'application/json'});  
+            res.json(docTypesObj);
+        }
+        else {
+            console.log('DB connection failed. \n Error : '
+            + JSON.stringify(err));
+            res.sendStatus(500);
+            return;
+        }
+    });
+});
+
+router.post("/postPersoanaNoua", (req, res) => {
+    console.log(req.body);
+    const mysqlConnectionPool = createConnectionPool();
+
+    var {cnp, nume, prenume, codCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
         localitatea, strada, nrStrada, bloc, scara, nrApartament, 
         judet, sector, telefon} = req.body;
     const addPersonQuery = 
     `       INSERT INTO persoane 
-    (cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+    (cnp, nume, prenume, codCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
         localitatea, strada, nrStrada, bloc, scara, nrApartament, 
         judet, sector, telefon) 
             VALUES 
-    ('${cnp}', '${nume}', '${prenume}', '${seriaCI}', '${numarCI}', '${eliberatDeCI}', '${dataEliberariiCI}',
+    ('${cnp}', '${nume}', '${prenume}', '${codCI}', '${seriaCI}', '${numarCI}', '${eliberatDeCI}', '${dataEliberariiCI}',
     '${localitatea}', '${strada}', '${nrStrada}', '${bloc}', '${scara}', '${nrApartament}', 
     '${judet}', '${sector}', '${telefon}')`;
     
@@ -93,22 +111,23 @@ router.post("/postPersoanaNoua", (req, res) => {
 
 router.put("/editPerson", (req,res) => {
     const mysqlConnectionPool = createConnectionPool();
-    var {cnp, nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+    var {cnp, nume, codCI, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
         localitatea, strada, nrStrada, bloc, scara, nrApartament, 
         judet, sector, telefon} = req.body;
         const editPersonQuery = 
-        ` UPDATE persoane SET  nume = ?, prenume = ?, seriaCI = ?, numarCI = ?, eliberatDeCI = ?, dataEliberariiCI = ?, 
+        ` UPDATE persoane SET  nume = ?, prenume = ?, codCI = ?, seriaCI = ?, numarCI = ?, eliberatDeCI = ?, dataEliberariiCI = ?, 
             localitatea = ?, strada = ?, nrStrada = ?, bloc = ?, scara = ?, nrApartament = ?, 
             judet = ?, sector = ?, telefon = ? WHERE cnp = ?
         `
-        mysqlConnectionPool.query(editPersonQuery, [nume, prenume, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
+        mysqlConnectionPool.query(editPersonQuery, [nume, prenume, codCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
             localitatea, strada, nrStrada, bloc, scara, nrApartament, 
             judet, sector, telefon, cnp], (err, rows, fields) => {
+                console.log("Edit person err: ", err);
+                console.log("Edit person linii: ", rows);        
+                console.log("Edit person fields: ", fields);                    
                 if (!err) {
                     res.setHeader('200', {'Content-Type' : 'application/json'});  
-                    res.send({
-                        "message" : "Persoana a fost modificata cu succes in baza de date"
-                    });
+                    res.json(req.body);
                 }
                 else {
                     console.log('DB connection failed. \n Error : ' + JSON.stringify(err));
@@ -124,7 +143,7 @@ router.put("/editPerson", (req,res) => {
 
 router.get('/getPersons',((req, res) => {
     const mysqlConnectionPool = createConnectionPool();
-    const getPersonsQuery = `SELECT * FROM persoane`;
+    const getPersonsQuery = `SELECT * FROM persoane LEFT JOIN citypes ON persoane.codCI = citypes.codCI`;
     mysqlConnectionPool.query(getPersonsQuery, (err, rows, fields) => {
         if (!err) {
             res.setHeader('200', {'Content-Type' : 'application/json'}); 
@@ -142,7 +161,7 @@ router.get('/getPersons',((req, res) => {
 
 /*   ---- Delete persons from db   */
 
-router.post('/deletePerson',((req,res) => {
+router.delete('/deletePerson',((req,res) => {
     const mysqlConnectionPool = createConnectionPool();
     const pers = req.body;
     const deletePersonQuery = `DELETE FROM persoane WHERE cnp=${pers.cnp}`;

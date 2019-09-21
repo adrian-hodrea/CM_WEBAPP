@@ -1,10 +1,21 @@
+import { renderSelectElement } from "./selectElement.js";
+
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 function onHtmlLoaded() {
+    var selectElement = document.getElementById("IdDocTypes");
+    renderSelectElement(selectElement);
 
     document.getElementById("sendButton").addEventListener("click", () => {
         if (checkMandatoryFields()) {
-            const inputFields = document.getElementsByTagName("input");
-            handleAddPersonClick(inputFields);
+            const inputFields = document.querySelectorAll("input, select");
+            var formDataObj = {};
+            console.log("Input fields: ",inputFields);
+            inputFields.forEach(element => {
+                formDataObj[element.name] = element.value;
+            })
+            console.log("Input fields  OBJECT: ",formDataObj);
+
+            handleAddPersonClick(formDataObj);
         }
         else {
             promptInfoMessage("Completati toate campurile obligatorii marcate cu rosu");
@@ -12,7 +23,7 @@ function onHtmlLoaded() {
     })
    
     const checkMandatoryFields = () => {
-        const requiredFields = document.querySelectorAll("input[required]");
+        const requiredFields = document.querySelectorAll("input[required], select[required]");
         var allRequiredFieldsOK = true;
         requiredFields.forEach( (item)=> {
             if (item.value === "") {
@@ -26,28 +37,9 @@ function onHtmlLoaded() {
         return allRequiredFieldsOK;
     }
 
-    const handleAddPersonClick = (formData) => {
-        var persoanaNoua = new Persoana({
-            nume: formData[0].value,
-            prenume: formData[1].value,
-            cnp: formData[2].value,
-    
-            seriaCI: formData[3].value,
-            numarCI: formData[4].value,
-            eliberatDeCI: formData[5].value,
-            dataEliberariiCI: formData[6].value,
-    
-            localitatea: formData[7].value,
-            strada: formData[8].value,
-            nrStrada: formData[9].value,
-            bloc: formData[10].value,
-            scara: formData[11].value,
-            nrApartament: formData[12].value,
-            judet:  formData[13].value,
-            sector:formData[14].value,
-      
-            telefon:formData[15].value
-        });
+    const handleAddPersonClick = (formDataObj) => {
+
+        var persoanaNoua = new Persoana(formDataObj);
         const root = window.localStorage.getItem("root");
         const apiUrl = root + '/postPersoanaNoua';
         persoanaNoua.adaugaPersoanaInBD(apiUrl)

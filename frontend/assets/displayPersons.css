@@ -35,30 +35,39 @@
         text-align: center;
     }
 
-    #saveChangesBtn {
+    .saveChangesBtn {
         background-color: #5ec268
     }
 
-    #saveChangesBtn:hover {
+    .saveChangesBtn:hover {
         cursor: pointer;
         background-color: #43ac6a
     }
 
 
-    #editPersonBtn {
+    .editPersonBtn {
         background-color: #f6af4d
     }
 
-    #editPersonBtn:hover {
+    .editPersonBtn:hover {
         cursor: pointer;
         background-color: #ec971f;
     }
 
-    #deletePersonBtn {
+    .cancelEditPersonBtn {
+        background-color: #798891;
+    }
+
+    .cancelEditPersonBtn:hover {
+        background-color: #49606b;
+    }
+
+
+    .deletePersonBtn {
         background-color: #f98978;
     }
 
-    #deletePersonBtn:hover {
+    .deletePersonBtn:hover {
         cursor: pointer;
         background-color: #d9534f;
     }
