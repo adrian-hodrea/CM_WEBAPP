@@ -3,7 +3,6 @@ const router = express.Router();
 const fs = require('fs');
 var mysql = require('mysql');
 const arrayToTree = require('array-to-tree');
-const dbi = require('./dbi');
 const bodyparser = require('body-parser');
 
 router.use(bodyparser.json());
@@ -11,13 +10,11 @@ router.use('/frontend', express.static('frontend'));
 router.use('/assets', express.static('assets'));
 
 
-
 router.get("/", (req,res) => {
     res.writeHead(200, {'Content-Type' : 'text/html'});
     var myReadStream = fs.createReadStream('./frontend/pages/index.html','utf8')
     myReadStream.pipe(res);
 });
-
 
 /* Routes dealing with DB */
 
@@ -28,7 +25,9 @@ const createConnectionPool = () => {
         user : 'mvp',
         password : 'mvppass',
         database : 'mvp',
-        debug : false
+        debug : false,
+        timezone : 'Z',
+        dateStrings : 'true'
     })
 }
 
@@ -77,9 +76,7 @@ router.get('/getIdDocTypes', (req, res) => {
 });
 
 router.post("/postPersoanaNoua", (req, res) => {
-    console.log(req.body);
     const mysqlConnectionPool = createConnectionPool();
-
     var {cnp, nume, prenume, codCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
         localitatea, strada, nrStrada, bloc, scara, nrApartament, 
         judet, sector, telefon} = req.body;
@@ -122,9 +119,6 @@ router.put("/editPerson", (req,res) => {
         mysqlConnectionPool.query(editPersonQuery, [nume, prenume, codCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI, 
             localitatea, strada, nrStrada, bloc, scara, nrApartament, 
             judet, sector, telefon, cnp], (err, rows, fields) => {
-                console.log("Edit person err: ", err);
-                console.log("Edit person linii: ", rows);        
-                console.log("Edit person fields: ", fields);                    
                 if (!err) {
                     res.setHeader('200', {'Content-Type' : 'application/json'});  
                     res.json(req.body);

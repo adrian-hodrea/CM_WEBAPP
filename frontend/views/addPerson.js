@@ -9,11 +9,9 @@ function onHtmlLoaded() {
         if (checkMandatoryFields()) {
             const inputFields = document.querySelectorAll("input, select");
             var formDataObj = {};
-            console.log("Input fields: ",inputFields);
             inputFields.forEach(element => {
                 formDataObj[element.name] = element.value;
             })
-            console.log("Input fields  OBJECT: ",formDataObj);
 
             handleAddPersonClick(formDataObj);
         }

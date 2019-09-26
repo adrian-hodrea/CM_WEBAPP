@@ -1,6 +1,6 @@
 import { renderSelectElement } from "./selectElement.js";
 
-const root = "http://127.0.0.1:3000";
+const root = window.localStorage.getItem("root");
 const  listaPersoane = new PersonsList();
 const apiUrl = root + '/getPersons';
 listaPersoane.getPersonsList(apiUrl)
@@ -38,11 +38,11 @@ const appendPersons = (listOfPersons) => {
             <td><p data-propName="sector" class="editableTableCell">${sector}</p></td>
             <td><p data-propName="telefon" class="editableTableCell">${telefon}</p></td>
             <td>
-                <span title="Editeaza" id="editPersonBtn" class="editPersonBtn">
+                <span title="Editeaza" id="editPersonBtn" class="editRowBtn">
                     <i class="fas fa-pen"></i>
                     <span>Edit</span>
                 </span>
-                <span title="Sterge" id="deletePersonBtn" class="deletePersonBtn">
+                <span title="Sterge" id="deletePersonBtn" class="deleteRowBtn">
                     <i class="fas fa-trash-alt"></i>  
                     <span>Delete</span>
                 </span>
@@ -97,7 +97,7 @@ const appendPersons = (listOfPersons) => {
                     saveActualHtmlData(editableCells,actualHtmlData); // Save row displayed data before row Edit to put back in case of Cancelation of Edit action
                     tr.setAttribute("data-editMode","true");
                     editButton.lastElementChild.innerHTML="Cancel";
-                    editButton.classList.add("cancelEditPersonBtn");
+                    editButton.classList.add("cancelEditRowBtn");
                     editButton.firstElementChild.style.display = "none";
                     editableCells.forEach(element => {
                         element.setAttribute("contenteditable","true");
@@ -157,7 +157,7 @@ const appendPersons = (listOfPersons) => {
 
         function removeRowEditUX (editableCells) {
             editButton.lastElementChild.innerHTML="Edit";
-            editButton.classList.remove("cancelEditPersonBtn");
+            editButton.classList.remove("cancelEditRowBtn");
             editButton.firstElementChild.style.display = "inline";
             editableCells.forEach(element => element.removeAttribute("contenteditable"));
             tr.classList.remove("editableTableRow");
