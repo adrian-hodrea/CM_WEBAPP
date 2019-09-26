@@ -52,3 +52,4 @@ class Persoana {
 
 }
 
+export { Persoana };

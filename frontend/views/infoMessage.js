@@ -41,5 +41,6 @@ const promptConfirmationMessage = (messageToDisplay, handleConfirmation, handleC
         });
     document.getElementById("ConfirmationBtn")
     .addEventListener("click", () => handleConfirmation());
+};
 
-    };
+export { promptInfoMessage, promptConfirmationMessage };

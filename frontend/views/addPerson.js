@@ -1,9 +1,11 @@
-import { renderSelectElement } from "./selectElement.js";
+import { renderSelectTipDocIdentitElement } from "./selectElement.js";
+import { Persoana } from "../models/Persoana.js";
+import { promptInfoMessage} from "./infoMessage.js";
 
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 function onHtmlLoaded() {
     var selectElement = document.getElementById("IdDocTypes");
-    renderSelectElement(selectElement);
+    renderSelectTipDocIdentitElement(selectElement);
 
     document.getElementById("sendButton").addEventListener("click", () => {
         if (checkMandatoryFields()) {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/allStyles.css">
+    <link rel="stylesheet" href="../assets/form.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Adauga copil</title>
+</head>
+<body>
+    <header>
+        <div id="greyTopRibbon"></div>
+        <div id="appBrand">Mvp WebApp</div>
+        <nav id="menuTreeContainer"></nav>
+    </header>
+        
+    <section>
+        <div class="formContainer">
+          <h1>Adauga copil</h1>
+          <hr>
+
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>
+                <label for="nume"><b>Nume</b></label>
+                <input type="text" name="nume" required>  
+            </div>
+        
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>
+                <label for="prenume"><b>Prenume</b></label>
+                <input type="text" name="prenume" required>  
+            </div>
+
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>  
+                <label for="cnp"><b>CNP</b></label>
+                <input type="text" name="cnp" required>
+            </div>
+
+            <div class="formInputPair"> 
+                <i class="fas fa-star"></i>
+                <label for="seriaCN"><b>Serie Certificat de Nastere</b></label>
+                <input type="text" name="seriaCN" required>
+            </div>
+        
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>
+                <label for="numarCN"><b>Numar Certificat de Nastere</b></label>
+                <input type="text" name="numarCN" required>
+            </div>
+
+            <div class="formInputPair">        
+                <i class="fas fa-star"></i>
+                <label for="dataNasterii"><b>Data eliberarii Certificat de Nastere</b></label>
+                <input type="date" name="dataNasterii">
+            </div>    
+
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>  
+                <label for="tata"><b>Tata</b></label>
+                <select id="tataCopil" name="tata" required> 
+                </select>
+            </div>
+
+            <div class="formInputPair">
+                <i class="fas fa-star"></i>  
+                <label for="mama"><b>Mama</b></label>
+                <select id="mamaCopil" name="mama" required> 
+                </select>
+            </div>
+            <input id="sendButton" type="button" value="Adauga copil" class="registerbtn"></input>
+        </div> 
+    </section>
+
+    <script type="module" src="../views/addChild.js"></script>
+
+</body>
+</html>

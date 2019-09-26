@@ -16,3 +16,5 @@ class PersonsList {
         })
     }
 }
+
+export { PersonsList };

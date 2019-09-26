@@ -1,4 +1,7 @@
-import { renderSelectElement } from "./selectElement.js";
+import { renderSelectTipDocIdentitElement } from "./selectElement.js";
+import { PersonsList } from "../models/PersonsList.js";
+import { Persoana } from "../models/Persoana.js";
+import { promptInfoMessage, promptConfirmationMessage } from "./infoMessage.js";
 
 const root = window.localStorage.getItem("root");
 const  listaPersoane = new PersonsList();
@@ -106,7 +109,7 @@ const appendPersons = (listOfPersons) => {
                     saveButton.style.visibility = "visible";  
                     tr.querySelector("p[id='desCI']").style.display = "none";
 
-                    renderSelectElement(selectElement);
+                    renderSelectTipDocIdentitElement(selectElement);
                     selectElement.style.display = "block";
                 }
                 else {
