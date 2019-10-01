@@ -1,7 +1,10 @@
-import { renderSelectTipDocIdentitElement } from "./selectElement.js";
+import { renderSelectTipDocIdentitElement } from "../ownModules/selectElement.js";
+import { saveActualHtmlData } from "../ownModules/saveActualHtmlData.js";
+import { restoreDataBeforeEdit } from "../ownModules/restoreDataBeforeEdit.js";
 import { PersonsList } from "../models/PersonsList.js";
 import { Persoana } from "../models/Persoana.js";
-import { promptInfoMessage, promptConfirmationMessage } from "./infoMessage.js";
+import { promptInfoMessage, promptConfirmationMessage } from "../ownModules/infoMessage.js";
+
 
 const root = window.localStorage.getItem("root");
 const  listaPersoane = new PersonsList();
@@ -117,7 +120,7 @@ const appendPersons = (listOfPersons) => {
                     restoreDataBeforeEdit(editableCells,actualHtmlData);  // put back data into html row from saved data
                     removeRowEditUX(editableCells);
                 }
-        } // end of handleEditPerson
+        } 
 
         function handleSavePersonButtonClick() {
             var editableCells = Array.from(tr.getElementsByClassName("editableTableCell"));
@@ -137,26 +140,7 @@ const appendPersons = (listOfPersons) => {
 
                 }
             })
-        }
-
-        function saveActualHtmlData(editableCells,objToPopulate) {
-            editableCells.forEach(element => {
-                var propName = element.getAttribute("data-propName");
-                var elementType = element.tagName;
-                if (elementType === "P")
-                    objToPopulate[propName] = element.innerText;
-                else
-                    objToPopulate[propName] = element.value;
-            }); 
-        }
-
-        function restoreDataBeforeEdit(editableCells,objToReadFrom) {
-            editableCells.forEach(element => {
-                var propName = element.getAttribute("data-propName");
-                var textToRestore = objToReadFrom[propName];
-                element.innerText = textToRestore;
-            });
-        };    
+        };
 
         function removeRowEditUX (editableCells) {
             editButton.lastElementChild.innerHTML="Edit";

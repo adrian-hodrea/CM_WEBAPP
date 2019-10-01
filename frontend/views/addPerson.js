@@ -1,6 +1,8 @@
-import { renderSelectTipDocIdentitElement } from "./selectElement.js";
+import { renderSelectTipDocIdentitElement } from "../ownModules/selectElement.js";
 import { Persoana } from "../models/Persoana.js";
-import { promptInfoMessage} from "./infoMessage.js";
+import { promptInfoMessage} from "../ownModules/infoMessage.js";
+import { checkMandatoryFields} from "../ownModules/checkMandatoryFields.js";
+
 
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 function onHtmlLoaded() {
@@ -8,8 +10,9 @@ function onHtmlLoaded() {
     renderSelectTipDocIdentitElement(selectElement);
 
     document.getElementById("sendButton").addEventListener("click", () => {
-        if (checkMandatoryFields()) {
-            const inputFields = document.querySelectorAll("input, select");
+        var parentElement = document.getElementById("formContainer");
+        if (checkMandatoryFields(parentElement)) {
+            const inputFields = parentElement.querySelectorAll("input, select");
             var formDataObj = {};
             inputFields.forEach(element => {
                 formDataObj[element.name] = element.value;
@@ -20,22 +23,8 @@ function onHtmlLoaded() {
         else {
             promptInfoMessage("Completati toate campurile obligatorii marcate cu rosu");
         }
-    })
+    });
    
-    const checkMandatoryFields = () => {
-        const requiredFields = document.querySelectorAll("input[required], select[required]");
-        var allRequiredFieldsOK = true;
-        requiredFields.forEach( (item)=> {
-            if (item.value === "") {
-                allRequiredFieldsOK = false;
-                item.classList.add("mandatoryField");
-            }
-            else {
-                item.style.border = "none";
-            }
-        })
-        return allRequiredFieldsOK;
-    }
 
     const handleAddPersonClick = (formDataObj) => {
 
