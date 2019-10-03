@@ -4,8 +4,8 @@
 #favoriteButtonsContainer {
     width: 300px;
     height: 100px;    
-    position: relative;
-    top: 100px;;
+    position: absolute;
+    top: 260px;;
     left: 50%;
     transform: translate(-50%, -50%); 
     font-size: 0;  
@@ -20,6 +20,7 @@
     margin-left: 4px;
     display: inline-block;
     border: 2px solid  var(--to-gradient-body-color);
+    position: relative;
     /*transition: all ease-in-out 500ms; */
 }
 
@@ -46,10 +47,9 @@ div.menuButtons p {
 }
 
 .menuOptionsContainer {
-    position: relative;
-    top: 126px;
-    left: 50%;
-    transform: translate(-70%, -60%);
+    position: absolute;
+    top: 106%;
+    left: -160%;
     height: 110px; 
     width: 400px;  
     display: flex;   

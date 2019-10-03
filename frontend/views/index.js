@@ -63,7 +63,9 @@ const handlePersMngmtClick = (button) => {
         menuOptionsContainer.appendChild(adaugaCopil);
         menuOptionsContainer.appendChild(listeazaCopil);
 
-        document.body.appendChild(menuOptionsContainer);
+//        document.body.appendChild(menuOptionsContainer);
+        button.appendChild(menuOptionsContainer);
+
         button.setAttribute("data-menuReleasedFlag","Y");
     } // end of   -- if (menuReleasedFlag != "Y")  --
 } // end of -- const handlePersMngmtClick = (button) =>   --

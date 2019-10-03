@@ -15,7 +15,6 @@ const renderMenuTree = () => {
     const menuTreeApi = root + "/getMenuTree";
     var menuContainer = document.getElementById("menuTreeContainer");
     menu.getMenuList(menuTreeApi).then( () => {
-        //menuContainer.innerHTML = renderTreeToHTML(menu.items);
         renderTreeToHTML(menuContainer,menu.items);
     });
 
@@ -23,6 +22,7 @@ const renderMenuTree = () => {
         var ulElement = document.createElement("ul");
         menuTree.forEach( (element, index) => {
             var menuElement = document.createElement("li");
+            menuElement.setAttribute("menuReleased","false");
             menuElement.setAttribute("data-id",`${element.id}`);
             if (element.id < 0) { // Horizontal Main menu item
                 menuElement.innerText = `${element.name}`;
@@ -43,11 +43,28 @@ const renderMenuTree = () => {
                 }    
             ulElement.appendChild(menuElement);
             if (element.children) {
-                menuElement.addEventListener("click",(function() {
-                    return () => renderTreeToHTML(menuElement,element.children);
-                })()   
-                );
+                menuElement.addEventListener("click",createSubmenuOnClick(menuElement));
             }    
+
+            function createSubmenuOnClick(menuItem) {
+                return () => {
+                    var releasedMenu = menuItem.getAttribute("menuReleased");
+                    removeSiblingMenu();
+                    if (releasedMenu === "false") {
+                        menuElement.setAttribute("menuReleased","true");
+                        renderTreeToHTML(menuElement,element.children);    
+                    }
+                }
+            }
+
+            function removeSiblingMenu() {
+                var openedMenuItem = ulElement.querySelector('li[menuReleased="true"]');
+                if (openedMenuItem) {
+                    var submenu = openedMenuItem.querySelector('ul');
+                    submenu.parentElement.removeChild(submenu); 
+                    openedMenuItem.setAttribute("menuReleased","false");   
+                }
+            }
 
         });
         menuContainer.appendChild(ulElement);
