@@ -2,16 +2,34 @@
     --font-color-blue: #25b9ec;
     --font-color-black: #444343;
     --default-color: #0B0A0A;
-    --main-color: #3eb6f2;
+    --main-color: #4abff1;
     --from-gradient-body-color: #80c4e7;
     --to-gradient-body-color: #2b607e;
     --icon-color: #a9de35;
+    --menu-color: #e5e8ed;
+    --mainMenu-hover-color: #ffffff;
+    --subMenu-hover-color: #bcc8cf;
     --tr-hover-color: #d6ebf6;
     --edit-row-color: #fce1b7;
     --required-field-color: rgba(240,128,128,0.4);
+    --menuItemTypeM-color: #b758ce;
+    --menuItemTypeF-color: #2e7ea3;
+    --menuItemTypeR-color: #06942a;
+
 }
 
 * {box-sizing: border-box}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+
+a, a:focus, a:hover, a:active, a:visited {
+    outline: none;
+    text-decoration: none;
+}
 
 body {
     background-image: linear-gradient(to bottom right, var(--from-gradient-body-color), var(--to-gradient-body-color));
@@ -25,29 +43,108 @@ body {
 header #greyTopRibbon {
     width: 100%;
     height: 8vh;
-    background-image: linear-gradient( white, lightgrey);
+    background-color: var(--menu-color);
 }
 
 header #appBrand {
     width: 100%;
-    padding: 8px 24px;
-    background-color: #3eb6f2;
-    font-weight: 600;
-    font-size: 18px;
+    padding: 6px 24px;
+    background-color: var(--main-color);
 }
 
+header #appBrand a {
+    font-family: 'Tangerine', cursive;
+    color: var(--font-color-black);
+    font-weight: 600;
+    font-size: 48px;
+}
+
+/* Main menu rules */
 nav#menuTreeContainer {
     padding: 8px 24px;
-    background-image: linear-gradient(to bottom right, lightgrey, lightgrey);
+    background-color: var(--menu-color);
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
 }
 
-nav#menuTreeContainer>li {
+nav#menuTreeContainer>ul>li {
     display: inline-block;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 16px;
     font-weight: 500;
     color: rgb(58, 56, 56);
     padding: 0 8px;
+    position: relative;
+}
+
+nav#menuTreeContainer>ul>li:hover {
+    cursor: pointer;
+    background-color: var(--mainMenu-hover-color);
+    transition: all ease-in-out 250ms;
+}
+
+nav#menuTreeContainer>ul>li::before {
+    content: '';
+    display: block;
+    height: 2px;
+    background: var(--main-color);
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    transform: scale(0,1);
+    transition: transform ease-in-out 250ms;
+}
+
+nav#menuTreeContainer>ul>li:hover::before {
+    transform: scale(1,1);
+}
+
+/* First level menu rules */
+
+.firstLevelMenu {
+    width: 320px;
+    list-style-type: none;
+    position: absolute;
+    z-index: 99;
+    top: 28px;
+    left: 0px;
+    right: 0;
+    font-size: 14px;
+    background-color: var(--mainMenu-hover-color);
+    border: 1px solid grey;
+}
+
+.firstLevelMenu>li {
+    padding: 7px;
+}
+
+.firstLevelMenu li:hover {
+    background-color:  var(--subMenu-hover-color);
+}
+
+.menuItemTypeM, .menuItemTypeF, .menuItemTypeR {
+    display: inline-block;
+    margin: 0;
+    width: 14px;
+    height: 14px;
+    padding: 0 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid grey;
+    border-radius: 1px;
+    background-color: var(--mainMenu-hover-color);
+}
+
+.menuItemTypeM {
+    color : var(--menuItemTypeM-color);
+}
+.menuItemTypeF {
+    color : var(--menuItemTypeF-color);
+}
+.menuItemTypeR {
+    color : var(--menuItemTypeR-color);
 }
 
 

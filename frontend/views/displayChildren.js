@@ -4,6 +4,13 @@ import { restoreDataBeforeEdit } from "../ownModules/restoreDataBeforeEdit.js";
 import { ChildrenList } from "../models/ChildrenList.js";
 import { Child } from "../models/Child.js";
 import { promptInfoMessage, promptConfirmationMessage } from "../ownModules/infoMessage.js";
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
+
+document.addEventListener('DOMContentLoaded', onHtmlLoaded);
+
+function onHtmlLoaded() {
+renderPageHeader();
+renderMenuTree();    
 
 const root = window.localStorage.getItem("root");
 const  listaCopii = new ChildrenList();
@@ -16,6 +23,7 @@ const appendChildren = (listOfChildren) => {
 
     listOfChildren.forEach( (element, index) => {
         var child = new Child(element);
+        console.log("Copil:",child);
         var tr = document.createElement("tr");
         var {nume, prenume, cnp, seriaCN, numarCN, 
             dataNasterii, numeTata, prenumeTata, numeMama, prenumeMama} = element;
@@ -93,6 +101,7 @@ const appendChildren = (listOfChildren) => {
         }; 
 
         function handleEditPersonButtonClick() {
+            console.log("Child din handle edit:", child);
             const editMode = tr.getAttribute("data-editMode");
             var editableCells = Array.from(tr.getElementsByClassName("editableTableCell"));
             if (editMode === 'false') { // Click pe Edit version of Button
@@ -109,8 +118,8 @@ const appendChildren = (listOfChildren) => {
                 tr.querySelector("p[id='numeTata']").style.display = "none";
                 tr.querySelector("p[id='numeMama']").style.display = "none";
 
-                renderSelectPersonElement(selectTataElement);
-                renderSelectPersonElement(selectMamaElement);
+                renderSelectPersonElement(selectTataElement,child.tataFk);
+                renderSelectPersonElement(selectMamaElement,child.mamaFk);
                 selectTataElement.style.display = "block";
                 selectMamaElement.style.display = "block";
 
@@ -132,13 +141,13 @@ const appendChildren = (listOfChildren) => {
                 if (response.ok) {   // raspunsul venit de la server e cu status de 200
                         tr.setAttribute("data-editMode","false");
                         var idNumeTata = selectTataElement.value;
+                        child.tataFk = idNumeTata;
                         var numeTata = selectTataElement.querySelector(`option[value="${idNumeTata}"]`).innerText;
                         pDesNumeTata.innerHTML = numeTata;
                         var idNumeMama = selectMamaElement.value;
+                        child.mamaFk = idNumeMama;
                         var numeMama = selectMamaElement.querySelector(`option[value="${idNumeMama}"]`).innerText;
                         pDesNumeMama.innerHTML = numeMama;
-
-                    
                         removeRowEditUX(editableCells);
                 } 
                 else {
@@ -164,6 +173,5 @@ const appendChildren = (listOfChildren) => {
        childrenContainer.appendChild(tr);    
 
     }); // end of foreach
-
-
 }
+};

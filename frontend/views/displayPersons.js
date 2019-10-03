@@ -4,8 +4,15 @@ import { restoreDataBeforeEdit } from "../ownModules/restoreDataBeforeEdit.js";
 import { PersonsList } from "../models/PersonsList.js";
 import { Persoana } from "../models/Persoana.js";
 import { promptInfoMessage, promptConfirmationMessage } from "../ownModules/infoMessage.js";
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
 
+document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 
+function onHtmlLoaded() {
+
+renderPageHeader();
+renderMenuTree();
+    
 const root = window.localStorage.getItem("root");
 const  listaPersoane = new PersonsList();
 const apiUrl = root + '/getPersons';
@@ -102,6 +109,7 @@ const appendPersons = (listOfPersons) => {
                 if (editMode === 'false') { // Click pe Edit version of Button
                     saveActualHtmlData(editableCells,actualHtmlData); // Save row displayed data before row Edit to put back in case of Cancelation of Edit action
                     tr.setAttribute("data-editMode","true");
+                    console.log("Persoana codCI:", persoana.codCI);
                     editButton.lastElementChild.innerHTML="Cancel";
                     editButton.classList.add("cancelEditRowBtn");
                     editButton.firstElementChild.style.display = "none";
@@ -112,7 +120,7 @@ const appendPersons = (listOfPersons) => {
                     saveButton.style.visibility = "visible";  
                     tr.querySelector("p[id='desCI']").style.display = "none";
 
-                    renderSelectTipDocIdentitElement(selectElement);
+                    renderSelectTipDocIdentitElement(selectElement,persoana.codCI);
                     selectElement.style.display = "block";
                 }
                 else {
@@ -132,6 +140,7 @@ const appendPersons = (listOfPersons) => {
                 if (response.ok) {   // raspunsul venit de la server e cu status de 200
                         tr.setAttribute("data-editMode","false");
                         var idDocIdentit = selectElement.value;
+                        persoana.codCI = idDocIdentit;
                         var tipDocIdentit = selectElement.querySelector(`option[value="${idDocIdentit}"]`).innerText;
                         pDesDocIdentit.innerHTML = tipDocIdentit;
                         removeRowEditUX(editableCells);
@@ -156,5 +165,5 @@ const appendPersons = (listOfPersons) => {
         personsContainer.appendChild(tr);    
 
     }); // end of foreach
-}
-
+};
+};

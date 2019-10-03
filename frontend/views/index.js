@@ -1,26 +1,17 @@
-/* Get Menu Tree data */
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
+
+document.addEventListener('DOMContentLoaded', onHtmlLoaded);
+
+function onHtmlLoaded() {
+
 const root = "http://127.0.0.1:3000";
 window.localStorage.setItem("root" , `${root}`);
-var menu = new MenuTree();
-const menuTreeApi = root + "/getMenuTree";
-menu.getMenuList(menuTreeApi).then( () => {
-    var menuContainer = document.getElementById("menuTreeContainer");
-    menuContainer.innerHTML = renderTreeToHTML(menu.items);
-});
+
+renderPageHeader();
+renderMenuTree();
 
 /* End of getting Menu Tree data */
 
-function renderTreeToHTML(tree) {
-    html = "";
-    tree.forEach( function(element, index)  {
-        html += `<li data-id="${element.id}">${element.name}</li>`;
-        if (index < tree.length - 1) {
-            html += `<span>|</span>`;
-        };
-    });
-    html += "</ul>"
-    return html;
-} 
 
 /* Favorites buttons */
 document.getElementById("personManag").addEventListener("click", function() {
@@ -39,7 +30,7 @@ const handlePersMngmtClick = (button) => {
         var menuOptionsContainer = document.createElement("div");
         menuOptionsContainer.id = "menuOptionsContainer";
         menuOptionsContainer.classList.add("menuOptionsContainer");
-           
+        
         var adaugaPersoaneBtn = menuButtonCreator('fas fa-user-plus','Adauga Persoana');
         var listeazaPersoanaBtn = menuButtonCreator('fas fa-address-book','Listeaza Persoane');
         var adaugaCopil = menuButtonCreator('fas fa-child','Adauga Copil');
@@ -95,4 +86,4 @@ function menuButtonCreator (iconClass, text) {
     button.classList.add("menuButtons");
     return button;
 }
-
+};

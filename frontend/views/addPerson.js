@@ -2,10 +2,14 @@ import { renderSelectTipDocIdentitElement } from "../ownModules/selectElement.js
 import { Persoana } from "../models/Persoana.js";
 import { promptInfoMessage} from "../ownModules/infoMessage.js";
 import { checkMandatoryFields} from "../ownModules/checkMandatoryFields.js";
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
 
 
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 function onHtmlLoaded() {
+    renderPageHeader();
+    renderMenuTree();
+
     var selectElement = document.getElementById("IdDocTypes");
     renderSelectTipDocIdentitElement(selectElement);
 

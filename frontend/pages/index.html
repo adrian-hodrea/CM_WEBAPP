@@ -8,17 +8,12 @@
     <link rel="stylesheet" href="frontend/assets/allStyles.css">
     <link rel="stylesheet" href="frontend/assets/index.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
+    <link href="https://fonts.googleapis.com/css?family=Tangerine&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <div id="greyTopRibbon"></div>
-        <div id="appBrand">Mvp WebApp</div>
-        <nav id="menuTreeContainer"></nav>
-    </header>
-
+    <header id="pageHeader"></header>
     <div id="favoriteButtonsContainer">
-
         <div id="personManag" class = "menuButtons" data-menuReleasedFlag="">
             <div>
                 <i class="fas fa-users"></i>
@@ -32,30 +27,10 @@
             </div>
             <p>Management Concedii Medicale </p>
         </div>
-
     </div>
+    <p id="">Simplisis</p>
 
-    <!--  
-    <div id="menuTreeContainer"></div>
-
-       <div id="buttonsContainer">
-        <div id="personManag" class = "menuButtons" data-menuReleasedFlag="">
-            <div>
-                <i class="fas fa-users"></i>
-            </div>
-            <p>Management Persoane</p>
-        </div>
-        <div id="CMManag"     class = "menuButtons">
-            <div>
-                <i class="fas fa-file-invoice"></i>
-            </div>
-            <p>Management Concedii Medicale </p>
-        </div>
-    </div>
--->
-
-    <script src="frontend/models/MenuTree.js"></script>
-    <script src="frontend/views/index.js"></script>
+    <script type="module" src="frontend/views/index.js"></script>
 
 </body>
 </html>

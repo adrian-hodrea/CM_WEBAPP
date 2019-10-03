@@ -35,7 +35,7 @@ router.get('/getMenuTree', (req,res) => {
     const mysqlConnectionPool = createConnectionPool();
     const menuQuery = 
 
-    `SELECT menu.execrun AS "id", exec.title AS "name", menu.exec AS "parent_id"
+    `SELECT menu.execrun AS "id", exec.title AS "name", menu.exec AS "parent_id", exec.type AS "type"
     FROM menu INNER JOIN exec ON menu.execrun = exec.exec`;
     mysqlConnectionPool.query(menuQuery, (err, rows, fields) => {
         if (!err) {
@@ -216,7 +216,8 @@ router.get('/getChildren',((req, res) => {
         copii.data_nasterii AS dataNasterii, copii.serie_cn AS seriaCN, 
         copii.numar_cn AS numarCN, 
         persoane_tata.nume AS numeTata, persoane_tata.prenume AS prenumeTata,
-        persoane_mama.nume AS numeMama, persoane_mama.prenume AS prenumeMama
+        persoane_mama.nume AS numeMama, persoane_mama.prenume AS prenumeMama,
+        copii.tata_fk as tataFk, copii.mama_fk as mamaFk
     FROM copii 
         JOIN persoane persoane_tata ON copii.tata_fk = persoane_tata.pers
         JOIN persoane persoane_mama ON copii.mama_fk = persoane_mama.pers

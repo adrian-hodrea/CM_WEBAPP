@@ -2,11 +2,15 @@ import { Child } from "../models/Child.js";
 import { renderSelectPersonElement } from "../ownModules/selectElement.js";
 import { promptInfoMessage } from "../ownModules/infoMessage.js";
 import { checkMandatoryFields } from "../ownModules/checkMandatoryFields.js";
-
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
 
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 
 function onHtmlLoaded() {
+
+    renderPageHeader();
+    renderMenuTree();
+
     var selectElement = document.getElementById("tataCopil");
     renderSelectPersonElement(selectElement);
 
