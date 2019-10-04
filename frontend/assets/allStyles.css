@@ -107,25 +107,33 @@ nav#menuTreeContainer>ul>li:hover::before {
 
 /* First level menu rules */
 
-.firstLevelMenu {
+.firstLevelMenu, .secondLevelMenu {
     width: 320px;
     list-style-type: none;
     position: absolute;
     z-index: 99;
-    top: 28px;
-    left: 0px;
-    right: 0;
     font-size: 14px;
     background-color: var(--mainMenu-hover-color);
     border: 1px solid grey;
 }
 
-.firstLevelMenu>li {
+.firstLevelMenu {
+    top: 28px;
+    left: 0;
+}
+
+.secondLevelMenu {
+    top: 2px;
+    left: 318px;
+}
+
+
+.firstLevelMenu>li, .secondLevelMenu>li {
     padding: 7px;
     position: relative
 }
 
-.firstLevelMenu li:hover {
+.firstLevelMenu li:hover, .secondLevelMenu li:hover {
     background-color:  var(--subMenu-hover-color);
     cursor: pointer;
 }
@@ -152,6 +160,11 @@ nav#menuTreeContainer>ul>li:hover::before {
 }
 .menuItemTypeR {
     color : var(--menuItemTypeR-color);
+}
+
+.menuItemText {
+    display: inline-block;
+    width: 90%;
 }
 
 .fa-angle-right {
