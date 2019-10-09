@@ -66,7 +66,7 @@ header #appBrand a {
 
 /* -------------- Main menu rules  --------------- */
 nav#menuTreeContainer {
-    padding: 8px 24px;
+    padding: 0px 24px;
     background-color: var(--menu-color);
     border-top: 2px solid white;
     border-bottom: 2px solid white;
@@ -94,9 +94,9 @@ nav#menuTreeContainer>ul>li::before {
     height: 2px;
     background: var(--main-color);
     position: absolute;
-    bottom: -8px;
+    bottom: 0;
     left: 0;
-    right: 0;
+    right: 0; 
     transform: scale(0,1);
     transition: transform ease-in-out 250ms;
 }
@@ -118,7 +118,7 @@ nav#menuTreeContainer>ul>li:hover::before {
 }
 
 .firstLevelMenu {
-    top: 28px;
+    top: 35px;
     left: 0;
 }
 
@@ -129,13 +129,16 @@ nav#menuTreeContainer>ul>li:hover::before {
 
 
 .firstLevelMenu>li, .secondLevelMenu>li {
-    padding: 7px;
     position: relative
 }
 
 .firstLevelMenu li:hover, .secondLevelMenu li:hover {
     background-color:  var(--subMenu-hover-color);
     cursor: pointer;
+}
+
+.menuItemContent {
+    padding: 7px;
 }
 
 .menuItemTypeM, .menuItemTypeF, .menuItemTypeR {

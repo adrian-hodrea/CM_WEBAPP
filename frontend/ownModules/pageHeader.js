@@ -30,58 +30,56 @@ function renderTreeToHTML(menuContainer,menuTree,menuType, ownerOfMenu) {
         }               
     }
     menuTree.forEach( (elementObj, index) => {
-        var liItemElement = document.createElement("li");
-        var menuItemElement = document.createElement("span");
-        liItemElement.appendChild(menuItemElement);
-        liItemElement.setAttribute("menuReleased","false");
-        liItemElement.setAttribute("data-id",`${elementObj.id}`);
+        var menuItem = document.createElement("li");  // menuItem = menuItemContent + menuItemChildSubmenu(ul Element)
+        var menuItemContent = document.createElement("div");
+        menuItemContent.classList.add("menuItemContent");
+        menuItem.appendChild(menuItemContent);
+        menuItem.setAttribute("childSubmenuReleased","false");
+        menuItem.setAttribute("data-id",`${elementObj.id}`);
         if (menuType ==="mainMenu") { // Horizontal Main menu item
-            menuItemElement.innerText = `${elementObj.name}`;
+            menuItemContent.innerText = `${elementObj.name}`;
             if (index < menuTree.length - 1) {
-                liItemElement.style.borderRight = "1px solid lightgrey";
+                menuItem.style.borderRight = "1px solid lightgrey";
             }
         }
             else {  // Vertical submenu item
                 if (index < menuTree.length - 1) {
-                    liItemElement.style.borderBottom = "1px solid lightgrey";
+                    menuItem.style.borderBottom = "1px solid lightgrey";
                 }    
-                menuItemElement.innerHTML = `
+                menuItemContent.innerHTML = `
                     <span class="menuItemType${elementObj.type}">${elementObj.type}</span>    
                     <span class="menuItemText">${elementObj.name}</span>
                     <i class="fas fa-angle-right"></i>
                 `;
             }    
-        ulElement.appendChild(liItemElement);
+        ulElement.appendChild(menuItem);
         if (elementObj.children) {
-            menuItemElement.addEventListener("click",createSubmenuOnClick());
+            menuItemContent.addEventListener("click",createSubmenuOnClick());
         }    
 
         function createSubmenuOnClick() {
             return () => {
-                var releasedMenu = menuItemElement.parentElement.getAttribute("menuReleased");
+                var releasedMenu = menuItem.getAttribute("childSubmenuReleased");
                 removeSiblingMenu();
                 if (releasedMenu === "false") {
-                    menuItemElement.parentElement.setAttribute("menuReleased","true");
-                    renderTreeToHTML(liItemElement,elementObj.children,"subMenu",menuType);    
+                    menuItem.setAttribute("childSubmenuReleased","true");
+                    renderTreeToHTML(menuItem,elementObj.children,"subMenu",menuType);    
                 }
             }
-
-
-
         }
 
         function removeSiblingMenu() {
-            var openedMenuItem = ulElement.querySelector('li[menuReleased="true"]');
+            var openedMenuItem = ulElement.querySelector('li[childSubmenuReleased="true"]');
             if (openedMenuItem) {
                 var submenu = openedMenuItem.querySelector('ul');
                 submenu.parentElement.removeChild(submenu); 
-                openedMenuItem.setAttribute("menuReleased","false");   
+                openedMenuItem.setAttribute("childSubmenuReleased","false");   
             }
         }
 
     });
     menuContainer.appendChild(ulElement);
-} ; 
+} ;  // end of function renderTreeToHTML
     
 
 export {renderPageHeader,renderMenuTree};

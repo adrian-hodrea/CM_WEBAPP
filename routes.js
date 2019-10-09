@@ -224,7 +224,6 @@ router.get('/getChildren',((req, res) => {
     `;
     mysqlConnectionPool.query(getChildrenQuery, (err, rows, fields) => {
         if (!err) {
-            console.log(rows);
             res.setHeader('200', {'Content-Type' : 'application/json'}); 
             res.send(rows);
         }
