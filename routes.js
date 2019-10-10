@@ -59,7 +59,7 @@ router.get('/getMenuTree', (req,res) => {
 
 router.get('/getIdDocTypes', (req, res) => {
     const mysqlConnectionPool = createConnectionPool();
-    const query = `SELECT * FROM citypes`;
+    const query = `SELECT * FROM ci_types`;
     mysqlConnectionPool.query(query, (err, rows, fields) => {
         if (!err) {
             var docTypesObj = arrayToTree(rows);
@@ -74,6 +74,46 @@ router.get('/getIdDocTypes', (req, res) => {
         }
     });
 });
+
+router.get('/getCodIndemnizatiiList', (req, res) => {
+    const mysqlConnectionPool = createConnectionPool();
+    const query = `SELECT * FROM cod_indemnizatie`;
+    mysqlConnectionPool.query(query, (err, rows, fields) => {
+        if (!err) {
+            var docTypesObj = arrayToTree(rows);
+            res.setHeader('200', {'Content-Type' : 'application/json'});  
+            res.json(docTypesObj);
+        }
+        else {
+            console.log('DB connection failed. \n Error : '
+            + JSON.stringify(err));
+            res.sendStatus(500);
+            return;
+        }
+    });
+});
+
+
+router.get('/getContracteList', (req, res) => {
+    const mysqlConnectionPool = createConnectionPool();
+    const query = `SELECT * FROM contracte_concedii`;
+    mysqlConnectionPool.query(query, (err, rows, fields) => {
+        if (!err) {
+            var docTypesObj = arrayToTree(rows);
+            res.setHeader('200', {'Content-Type' : 'application/json'});  
+            res.json(docTypesObj);
+        }
+        else {
+            console.log('DB connection failed. \n Error : '
+            + JSON.stringify(err));
+            res.sendStatus(500);
+            return;
+        }
+    });
+});
+
+
+/* ------- Persoane --------- */
 
 router.post("/postPersoanaNoua", (req, res) => {
     const mysqlConnectionPool = createConnectionPool();
@@ -137,7 +177,7 @@ router.put("/editPerson", (req,res) => {
 
 router.get('/getPersons',((req, res) => {
     const mysqlConnectionPool = createConnectionPool();
-    const getPersonsQuery = `SELECT * FROM persoane LEFT JOIN citypes ON persoane.codCI = citypes.codCI`;
+    const getPersonsQuery = `SELECT * FROM persoane LEFT JOIN ci_types ON persoane.codCI = ci_types.codCI`;
     mysqlConnectionPool.query(getPersonsQuery, (err, rows, fields) => {
         if (!err) {
             res.setHeader('200', {'Content-Type' : 'application/json'}); 
@@ -212,7 +252,7 @@ router.post("/postCopilNou", (req, res) => {
 router.get('/getChildren',((req, res) => {
     const mysqlConnectionPool = createConnectionPool();
     const getChildrenQuery = `SELECT 
-        copii.nume AS nume, copii.prenume AS prenume, copii.cnp AS cnp, 
+        copii.copil, copii.nume AS nume, copii.prenume AS prenume, copii.cnp AS cnp, 
         copii.data_nasterii AS dataNasterii, copii.serie_cn AS seriaCN, 
         copii.numar_cn AS numarCN, 
         persoane_tata.nume AS numeTata, persoane_tata.prenume AS prenumeTata,
@@ -283,6 +323,36 @@ router.put("/editChild", (req,res) => {
         
             });
 }); 
+
+/* ---------   Concedii medicale -------- */
+router.post("/postConcediuMedicalNou", (req, res) => {
+    console.log(req.body);
+    const mysqlConnectionPool = createConnectionPool();
+    var {serieCM, numarCM, persFk, dataAcordarii, deLaData, laData, 
+        tipInicCont, codIndemnicatieFk, cmInitFk, copilFk } = req.body;
+    const addPersonQuery = 
+    `       INSERT INTO concedii_medicale 
+        (serie_cm, numar_cm, pers_fk, data_acordarii, de_la_data, la_data, 
+        tip_init_cont, cod_indemnizatie_fk, cm_init_fk, copil_fk)
+            VALUES 
+        ('${serieCM}', '${numarCM}', '${persFk}', '${dataAcordarii}', '${deLaData}', '${laData}',
+        '${tipInicCont}', '${codIndemnicatieFk}', '${cmInitFk}', '${copilFk}')`;
+    
+    mysqlConnectionPool.query(addPersonQuery, (err, rows, fields) => {
+        if (!err) {
+            res.setHeader('200', {'Content-Type' : 'application/json'});  
+            res.send({
+                "message" : "Concediu medical a fost adaugat cu succes in baza de date"
+            });
+        }
+        else {
+            console.log('DB connection failed. \n Error : ' + JSON.stringify(err));
+            res.status(500);
+            res.send(JSON.stringify(err));
+            return;
+        }
+    })
+})
 
 
 module.exports = router;

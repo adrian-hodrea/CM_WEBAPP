@@ -36,9 +36,10 @@ function onHtmlLoaded() {
         const root = window.localStorage.getItem("root");
         const apiUrl = root + '/postPersoanaNoua';
         persoanaNoua.adaugaPersoanaInBD(apiUrl)
-            .then(response => {
+            .then(response => {  // promise resolved = server reached and received response
                 if (response.ok) {
-                    response.json().then(bodyData => promptInfoMessage(bodyData.message));
+                    response.json()
+                    .then(bodyData => promptInfoMessage(bodyData.message));
                 }    
                 else {
                     response.json()
@@ -50,7 +51,9 @@ function onHtmlLoaded() {
                         }
                     })
                 }
-            })
+            },  // promise rejected = server not reached or answer not sent by serever
+                () =>  promptInfoMessage("Adaugarea persoanei NU s-a efectuat. Eroare de retea sau server!")
+            ); // end of first then
     }
 
 } // End of onHtmlLoad

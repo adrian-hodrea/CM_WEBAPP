@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/allStyles.css">
+    <link rel="stylesheet" href="../assets/form.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Tangerine&display=swap" rel="stylesheet">
+    <title>Adauga Concediu Medical</title>
+</head>
+<body>
+    <header id="pageHeader"></header>
+        
+    <div id="formContainer" class="formContainer">
+        <h1>Adauga Concediu Medical</h1>
+        <hr>
+
+        <div class="formInputPair">
+            <i class="fas fa-star"></i>  
+            <label for="beneficiar"><b>Nume Beneficiar</b></label>
+            <select id="beneficiar" name="persFk" required> 
+            </select>
+        </div>
+
+        <div class="formInputPair">
+            <i class="fas fa-star"></i>  
+            <label for="contract"><b>Contract CAS</b></label>
+            <select id="contract" name="idCtrFk" required> 
+            </select>
+        </div>
+
+        <div class="formInputPair">
+            <i class="fas fa-star"></i>
+            <label for="serieCM"><b>Serie CM</b></label>
+            <input type="text" name="serieCM" required>  
+        </div>
+    
+        <div class="formInputPair">
+            <i class="fas fa-star"></i>
+            <label for="numarCM"><b>Numar CM</b></label>
+            <input type="text" name="numarCM" required>  
+        </div>
+
+        <div class="formInputPair">        
+            <i class="fas fa-star"></i>
+            <label for="dataAcordarii"><b>Data acordarii</b></label>
+            <input type="date" name="dataAcordarii">
+        </div>    
+
+        <div class="formInputPair">        
+            <i class="fas fa-star"></i>
+            <label for="deLaData"><b>De la data</b></label>
+            <input type="date" name="deLaData">
+        </div>    
+
+        <div class="formInputPair">        
+            <i class="fas fa-star"></i>
+            <label for="laData"><b>La data</b></label>
+            <input type="date" name="laData">
+        </div>    
+
+        <div class="formInputPair">
+                <i class="fas fa-star"></i>  
+                <label for="codIndemniz"><b>Cod Indemnizatie</b></label>
+                <select id="codIndemnizatie" name="codIndemnizatieFk" required> 
+                </select>
+        </div>
+    
+        <div class="formInputPair">
+            <i class="fas fa-star"></i>  
+            <label for="tipCmIC"><b>Tip Initial/Continuare</b></label>
+            <select name="tinInitCont" required> 
+                <option value=""></option>
+                <option value="I">Initial</option>
+                <option value="C">Continuare</option>
+            </select>
+        </div>
+
+        <div class="formInputPair">
+            <i class="fas fa-star fantom"></i>  
+            <label for="cmInitial"><b>CM Initial</b></label>
+            <select id="cmInitial" name="cmInitFk"> 
+             </select>
+        </div>
+    
+        <div class="formInputPair">
+            <i class="fas fa-star fantom"></i>  
+            <label for="copil"><b>Copil</b></label>
+            <select id="copil" name="copilFk"> 
+             </select>
+        </div>
+
+        <input id="sendButton" type="button" value="Adauga Concediu Medical" class="registerbtn"></input>
+    </div> 
+    <p id="backgroundAppBrand">Simplisis</p>
+
+    <script type="module" src="../views/addConcediuMedical.js"></script>
+
+</body>
+</html>
