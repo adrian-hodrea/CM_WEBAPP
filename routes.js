@@ -325,18 +325,40 @@ router.put("/editChild", (req,res) => {
 }); 
 
 /* ---------   Concedii medicale -------- */
+
+router.get('/getConcediiMedicaleList', (req, res) => {
+    const mysqlConnectionPool = createConnectionPool();
+    const query = `SELECT * FROM concedii_medicale`;
+    mysqlConnectionPool.query(query, (err, rows, fields) => {
+        if (!err) {
+            var docTypesObj = arrayToTree(rows);
+            res.setHeader('200', {'Content-Type' : 'application/json'});  
+            res.json(docTypesObj);
+        }
+        else {
+            console.log('DB connection failed. \n Error : '
+            + JSON.stringify(err));
+            res.sendStatus(500);
+            return;
+        }
+    });
+});
+
+
 router.post("/postConcediuMedicalNou", (req, res) => {
     console.log(req.body);
     const mysqlConnectionPool = createConnectionPool();
     var {serieCM, numarCM, persFk, dataAcordarii, deLaData, laData, 
-        tipInicCont, codIndemnicatieFk, cmInitFk, copilFk } = req.body;
+        tipInitCont, codIndemnicatieFk, cmInitFk, copilFk, idCtrFk} = req.body;
+    if (cmInitFk ==="")  { cmInitFk = "NULL"};
+    console.log("cmInitFk are valoarea: ", cmInitFk);  
     const addPersonQuery = 
     `       INSERT INTO concedii_medicale 
         (serie_cm, numar_cm, pers_fk, data_acordarii, de_la_data, la_data, 
-        tip_init_cont, cod_indemnizatie_fk, cm_init_fk, copil_fk)
+        tip_init_cont, cod_indemnizatie_fk, cm_init_fk, copil_fk, idctr_fk)
             VALUES 
         ('${serieCM}', '${numarCM}', '${persFk}', '${dataAcordarii}', '${deLaData}', '${laData}',
-        '${tipInicCont}', '${codIndemnicatieFk}', '${cmInitFk}', '${copilFk}')`;
+        '${tipInitCont}', '${codIndemnicatieFk}', ${cmInitFk} , '${copilFk}', '${idCtrFk}')`;
     
     mysqlConnectionPool.query(addPersonQuery, (err, rows, fields) => {
         if (!err) {

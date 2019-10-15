@@ -3,10 +3,11 @@ class ConcediuMedical {
         this.serieCM = concediu.serieCM,
         this.numarCM = concediu.numarCM,
         this.persFk = concediu.persFk,
+        this.idCtrFk = concediu.idCtrFk,
         this.dataAcordarii = concediu.dataAcordarii,
         this.deLaData = concediu.deLaData,
         this.laData = concediu.laData,
-        this.tipInicCont = concediu.tinInitCont,
+        this.tipInitCont = concediu.tipInitCont,
         this.codIndemnicatieFk = concediu.codIndemnizatieFk
         this.cmInitFk =  concediu.cmInitFk,
         this.copilFk = concediu.copilFk

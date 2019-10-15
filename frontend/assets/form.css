@@ -59,7 +59,8 @@ div.formInputPair input[type=text], div.formInputPair input[type=date], div.form
   border: 1px solid lightgrey;
 }
 
-div.formInputPair input[type=text]:focus, div.formInputPair input[type=date]:focus {
+div.formInputPair input[type=text]:focus, div.formInputPair input[type=date]:focus, div.formInputPair select:focus
+ {
   outline: none;
   border: 1px solid var(--main-color);
 }

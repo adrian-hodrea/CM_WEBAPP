@@ -3,6 +3,8 @@ import { PersonsList } from "../models/PersonsList.js";
 import { ChildrenList } from "../models/ChildrenList.js";
 import { CodIndemnizatiiList } from "../models/CodIndemnizatiiList.js";
 import { ContracteList } from "../models/ContracteList.js";
+import { ConcediiMedicaleList } from "../models/ConcediiMedicaleList.js";
+
 
 
 const renderSelectTipDocIdentitElement = (element,defaultCodCi) => {
@@ -96,6 +98,26 @@ const renderSelectCodContractElement = (element,defaultCodContract) => {
 };
 
 
+const renderSelectCodCmInitialElement = (element,defaultCodCm) => {
+    var coduriCM = new ConcediiMedicaleList();
+    const root = window.localStorage.getItem("root");
+    const apiUrl = root + "/getConcediiMedicaleList";
+    coduriCM.getConcediiMedicaleList(apiUrl).then( () => {
+        var selectOptions = `<option value=""></option>`;
+        coduriCM.items.forEach( (item) => {
+            if (item.cm == defaultCodCm) {
+                selectOptions += `<option value="${item.cm}" selected>${item.serie_cm} / ${item.numar_cm}</option>`;
+            }
+             else {
+                selectOptions += `<option value="${item.cm}">${item.serie_cm} ${item.numar_cm}</option>`;
+             }   
+        }); 
+        element.innerHTML = selectOptions;
+    });
+};
+
+
+
 export { renderSelectTipDocIdentitElement, renderSelectPersonElement, 
          renderSelectChildElement, renderSelectCodIndemnizatieElement, 
-         renderSelectCodContractElement }; 
+         renderSelectCodContractElement, renderSelectCodCmInitialElement }; 

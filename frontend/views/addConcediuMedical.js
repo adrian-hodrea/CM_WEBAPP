@@ -1,6 +1,7 @@
 import { ConcediuMedical } from "../models/ConcediuMedical.js";
 import { renderSelectPersonElement, renderSelectChildElement, 
-        renderSelectCodIndemnizatieElement, renderSelectCodContractElement} 
+        renderSelectCodIndemnizatieElement, renderSelectCodContractElement,
+        renderSelectCodCmInitialElement} 
         from "../ownModules/selectElement.js";
 import { promptInfoMessage } from "../ownModules/infoMessage.js";
 import { checkMandatoryFields } from "../ownModules/checkMandatoryFields.js";
@@ -24,6 +25,10 @@ function onHtmlLoaded() {
 
     var selectElement = document.getElementById("codIndemnizatie");
     renderSelectCodIndemnizatieElement(selectElement);
+
+    var selectElement = document.getElementById("cmInitial");
+    renderSelectCodCmInitialElement(selectElement);
+
 
     document.getElementById("sendButton").addEventListener("click", () => {
         var parentElement = document.getElementById("formContainer");
