@@ -151,9 +151,13 @@ const appendChildren = (listOfChildren) => {
                         removeRowEditUX(editableCells);
                 } 
                 else {
-
+                    promptInfoMessage("Eroare de server. Salvarea NU s-a efectuat");
                 }
-            })
+            },
+                () => {
+                promptInfoMessage("Eroare de retea. Salvarea NU s-a efectuat");
+                }
+            )
         };
 
 
