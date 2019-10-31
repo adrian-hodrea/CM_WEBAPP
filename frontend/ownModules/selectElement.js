@@ -14,11 +14,11 @@ const renderSelectTipDocIdentitElement = (element,defaultCodCi) => {
     idDocTypes.getIdDocTypesList(apiUrl).then( () => {
         var selectOptions = `<option value=""></option>`;
         idDocTypes.items.forEach( (element) => {
-            if (element.codCI == defaultCodCi) {
-                selectOptions += `<option value="${element.codCI}" selected>${element.desCI}</option>`;
+            if (element.ci_id == defaultCodCi) {
+                selectOptions += `<option value="${element.ci_id}" selected>${element.descriere_ci}</option>`;
             }
              else {
-                selectOptions += `<option value="${element.codCI}">${element.desCI}</option>`;
+                selectOptions += `<option value="${element.ci_id}">${element.descriere_ci}</option>`;
              }   
         }); 
         element.innerHTML = selectOptions;

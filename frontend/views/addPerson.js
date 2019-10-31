@@ -31,7 +31,7 @@ function onHtmlLoaded() {
    
 
     const handleAddPersonClick = (formDataObj) => {
-
+        var persoanaNoua = {};
         var persoanaNoua = new Persoana(formDataObj);
         const root = window.localStorage.getItem("root");
         const apiUrl = root + '/postPersoanaNoua';

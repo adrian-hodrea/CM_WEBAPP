@@ -86,14 +86,26 @@ const handleCmMngmtClick = (button) => {
         menuOptionsContainer.classList.add("menuOptionsContainer");
         
         var adaugaCmBtn = menuButtonCreator('fas fa-file-invoice','Adauga Concediu Medical');
-    
+        var listeazaCmBtn = menuButtonCreator('fas fa-file-invoice','Listeaza Concedii Medicale');
+
+
         adaugaCmBtn.addEventListener("click", function() {
             simulateButtonClick(this);   
             const addPersonUrl = root + "/frontend/pages/addConcediuMedical.html";
             window.open(addPersonUrl);
         });
 
+        listeazaCmBtn.addEventListener("click", function() {
+            simulateButtonClick(this);   
+            const addPersonUrl = root + "/frontend/pages/displayConcediiMedicale.html";
+            window.open(addPersonUrl);
+        });
+
+
+
         menuOptionsContainer.appendChild(adaugaCmBtn);
+        menuOptionsContainer.appendChild(listeazaCmBtn);
+
 
 //        document.body.appendChild(menuOptionsContainer);
         button.appendChild(menuOptionsContainer);

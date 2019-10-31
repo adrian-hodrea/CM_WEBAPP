@@ -1,41 +1,70 @@
-import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
-import { renderSelectTipDocIdentitElement } from "../ownModules/selectElement.js";
 import { saveActualHtmlData } from "../ownModules/saveActualHtmlData.js";
 import { restoreDataBeforeEdit } from "../ownModules/restoreDataBeforeEdit.js";
-import { PersonsList } from "../models/PersonsList.js";
-import { Persoana } from "../models/Persoana.js";
+import { ConcediiMedicaleList } from "../models/ConcediiMedicaleList.js";
+import { ConcediuMedical } from "../models/ConcediuMedical.js";
 import { promptInfoMessage, promptConfirmationMessage } from "../ownModules/infoMessage.js";
-import { createDisplayTableRow } from "../ownModules/createDisplayTableRow.js";
-import { handler } from "../ownModules/bindToViewProxyHandler.js";
-
+import { renderPageHeader,renderMenuTree } from "../ownModules/pageHeader.js";
 
 document.addEventListener('DOMContentLoaded', onHtmlLoaded);
 
 function onHtmlLoaded() {
-var persons = [];
 
 renderPageHeader();
 renderMenuTree();
     
 const root = window.localStorage.getItem("root");
-const  listaPersoane = new PersonsList();
+const  listaConcediiMedicale = new ConcediiMedicaleList();
 const apiUrl = root + '/getPersons';
-listaPersoane.getPersonsList(apiUrl)
-.then( () => appendPersons(listaPersoane.items));
+listaConcediiMedicale.getConcediiMedicaleList(apiUrl)
+.then( () => appendConcediiMedicale(ConcediiMedicaleList.items));
 
-const appendPersons = listOfPersons => {
-    const personsContainer = document.getElementById("personsContainerBody");
+const appendConcediiMedicale = (listOfCm) => {
+    const cmContainer = document.getElementById("concediiMedicaleContainerBody");
 
-    listOfPersons.forEach( (element, index) => {
-        var person = new Persoana(element);
-        var tr = createDisplayTableRow(person, index);
-        var person = new Proxy(person,handler);
-        persons.push(person);
-        person.refreshData(element); 
-        
-
-        var editButton =   tr.querySelector("#editBtn");
-        var deleteButton = tr.querySelector("#deleteBtn");
+    listOfCm.forEach( (element, index) => {
+        var concediuMedical = new ConcediuMedical(element);
+        var tr = document.createElement("tr");
+        var {nume, prenume, cnp, desCI, seriaCI, numarCI, eliberatDeCI, dataEliberariiCI,
+            localitatea, strada, nrStrada, bloc, scara, nrApartament, judet, sector, telefon} = element;
+        tr.setAttribute("data-editMode","false");
+        tr.innerHTML = `
+            <td>${index+1}</td>
+            <td><p data-propName="nume" class="editableTableCell">${nume}</p></td>
+            <td><p data-propName="prenume" class="editableTableCell">${prenume}</p></td>
+            <td><p data-propName="cnp" class="editableTableCell">${cnp}</p></td>
+            <td>
+                <p id="desCI">${desCI}</p>
+                <select data-propName="codCI" name="codCI" style="display: none" class="editableTableCell"></select>
+            </td>
+            <td><p data-propName="seriaCI" class="editableTableCell">${seriaCI}</p></td>
+            <td><p data-propName="numarCI" class="editableTableCell">${numarCI}</p></td>
+            <td><p data-propName="eliberatDeCI" class="editableTableCell">${eliberatDeCI}</p></td>
+            <td><p data-propName="dataEliberariiCI" class="editableTableCell">${dataEliberariiCI}</p></td>
+            <td><p data-propName="localitatea" class="editableTableCell">${localitatea}</p></td>
+            <td><p data-propName="strada" class="editableTableCell">${strada}</p></td>
+            <td><p data-propName="nrStrada" class="editableTableCell">${nrStrada}</p></td>
+            <td><p data-propName="bloc" class="editableTableCell">${bloc}</p></td>
+            <td><p data-propName="scara" class="editableTableCell">${scara}</p></td>
+            <td><p data-propName="nrApartament" class="editableTableCell">${nrApartament}</p></td>
+            <td><p data-propName="judet" class="editableTableCell">${judet}</p></td>
+            <td><p data-propName="sector" class="editableTableCell">${sector}</p></td>
+            <td><p data-propName="telefon" class="editableTableCell">${telefon}</p></td>
+            <td>
+                <span title="Editeaza" id="editPersonBtn" class="editRowBtn">
+                    <i class="fas fa-pen"></i>
+                    <span>Edit</span>
+                </span>
+                <span title="Sterge" id="deletePersonBtn" class="deleteRowBtn">
+                    <i class="fas fa-trash-alt"></i>  
+                    <span>Delete</span>
+                </span>
+                <span title="Save" id="saveChangesBtn" class="saveChangesBtn">
+                    <span>Save</span>
+                </span>
+            </td>             
+            `; 
+        var editButton =   tr.querySelector("#editPersonBtn");
+        var deleteButton = tr.querySelector("#deletePersonBtn");
         var saveButton =   tr.querySelector("#saveChangesBtn");
         var actualHtmlData = {};
         var newHtmlDataObj = {};
@@ -51,7 +80,7 @@ const appendPersons = listOfPersons => {
 
         function handleDeletePersonButtonClick() {
             tr.classList.add("mandatoryField");
-            var message = `Sunteti sigur ca doriti sa stergeti persoana ${person.nume} ${person.prenume} ?`;
+            var message = `Sunteti sigur ca doriti sa stergeti persoana ${nume} ${prenume} ?`;
             const handlePersonDeleteConfirmation = () => {
                 return  () => {
                     document.getElementById("OpenModal").remove();
@@ -79,6 +108,7 @@ const appendPersons = listOfPersons => {
                 if (editMode === 'false') { // Click pe Edit version of Button
                     saveActualHtmlData(editableCells,actualHtmlData); // Save row displayed data before row Edit to put back in case of Cancelation of Edit action
                     tr.setAttribute("data-editMode","true");
+                    console.log("Persoana codCI:", persoana.codCI);
                     editButton.lastElementChild.innerHTML="Cancel";
                     editButton.classList.add("cancelEditRowBtn");
                     editButton.firstElementChild.style.display = "none";
@@ -134,8 +164,5 @@ const appendPersons = listOfPersons => {
         personsContainer.appendChild(tr);    
 
     }); // end of foreach
-}; // end of appendPersons
-
-}; // end of onHtmlLoaded
-
-
+};
+};

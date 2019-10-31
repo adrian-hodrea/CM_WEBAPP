@@ -1,27 +1,31 @@
 
 class Persoana {
-    constructor (pers) {
-        this.nume = pers.nume;
-        this.prenume = pers.prenume;
-        this.cnp = pers.cnp;
+    constructor (personData) {
+        this.refreshData(personData);
+    } 
 
-        this.codCI = pers.codCI;
-        this.seriaCI = pers.seriaCI;
-        this.numarCI = pers.numarCI;
-        this.eliberatDeCI = pers.eliberatDeCI;
-        this.dataEliberariiCI = pers.dataEliberariiCI;
+    refreshData (personData) {
+        this.nume = personData.nume;
+        this.prenume = personData.prenume;
+        this.cnp = personData.cnp;
 
-        this.localitatea = pers.localitatea;
-        this.strada = pers.strada;
-        this.nrStrada = pers.nrStrada;
-        this.bloc = pers.bloc;
-        this.scara = pers.scara;
-        this.nrApartament = pers.nrApartament;
-        this.judet = pers.judet;
-        this.sector = pers.sector;
+        this.desCI = personData.descriere_ci;
+        this.seriaCI = personData.seriaCI;
+        this.numarCI = personData.numarCI;
+        this.eliberatDeCI = personData.eliberatDeCI;
+        this.dataEliberariiCI = personData.dataEliberariiCI;
+
+        this.localitatea = personData.localitatea;
+        this.strada = personData.strada;
+        this.nrStrada = personData.nrStrada;
+        this.bloc = personData.bloc;
+        this.scara = personData.scara;
+        this.nrApartament = personData.nrApartament;
+        this.judet = personData.judet;
+        this.sector = personData.sector;
   
-        this.telefon = pers.telefon;
-    }  
+        this.telefon = personData.telefon;
+    }
 
     adaugaPersoanaInBD (apiUrl) {
         const self = this;

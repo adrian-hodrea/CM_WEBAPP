@@ -140,14 +140,17 @@ const appendChildren = (listOfChildren) => {
             .then(response => {
                 if (response.ok) {   // raspunsul venit de la server e cu status de 200
                         tr.setAttribute("data-editMode","false");
+                        
                         var idNumeTata = selectTataElement.value;
                         child.tataFk = idNumeTata;
                         var numeTata = selectTataElement.querySelector(`option[value="${idNumeTata}"]`).innerText;
                         pDesNumeTata.innerHTML = numeTata;
+                        
                         var idNumeMama = selectMamaElement.value;
                         child.mamaFk = idNumeMama;
                         var numeMama = selectMamaElement.querySelector(`option[value="${idNumeMama}"]`).innerText;
                         pDesNumeMama.innerHTML = numeMama;
+                        
                         removeRowEditUX(editableCells);
                 } 
                 else {
